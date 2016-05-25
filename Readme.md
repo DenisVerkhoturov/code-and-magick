@@ -1,7 +1,7 @@
 # Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Денис Верхотуров](https://up.htmlacademy.ru/javascript/5/user/56756).
-* Наставник: `Неизвестно`.
+* Наставник: [Alexander Myadzel](https://htmlacademy.ru/profile/id124304).
 
 ---
 
