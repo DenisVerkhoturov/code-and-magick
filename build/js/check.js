@@ -15,7 +15,7 @@ function getMessage(a, b)
         message = 'Я прыгнул на ' + (a * 100) + ' сантиметров';
     }
     else if (typeof a == 'object') {
-        if (typeof b == 'object') {
+        if (typeof b == 'object' && b != null) {
             let length = a.reduce((result, current, index) => result + (current * b[index]));
             message = 'Я прошёл ' + length + ' метров';
         } else {
