@@ -2,12 +2,12 @@
 
 /**
  * Возвращает строку сообщения, сформированную в зависимости от типов переданных значений.
- * @param a {boolean||Boolean||number||Number||Array}
- * @param b {string||number||Number||Array}
+ * @param {*} a
+ * @param {*} [b]
  * @returns {string}
  */
 function getMessage(a, b) {
-  var message;
+  var message = '';
 
   if (typeof a === 'boolean') {
     if (a.valueOf()) {
@@ -19,18 +19,16 @@ function getMessage(a, b) {
     message = 'Я прыгнул на ' + (a * 100) + ' сантиметров';
   } else if (Array.isArray(a)) {
     if (Array.isArray(b)) {
-      var length = a.reduce(function (result, current, index) {
+      var length = a.reduce(function(result, current, index) {
         return result + current * (b[index] || 0);
       }, 0);
       message = 'Я прошёл ' + length + ' метров';
     } else {
-      var sum = a.reduce(function (result, current) {
+      var sum = a.reduce(function(result, current) {
         return result + current;
       }, 0);
       message = 'Я прошёл ' + sum + ' шагов';
     }
-  } else {
-    message = '';
   }
 
   return message;
