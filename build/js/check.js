@@ -19,12 +19,12 @@ function getMessage(a, b) {
     message = 'Я прыгнул на ' + (a * 100) + ' сантиметров';
   } else if (Array.isArray(a)) {
     if (Array.isArray(b)) {
-      var length = a.reduce(function(result, current, index) {
+      var length = a.reduce(function (result, current, index) {
         return result + current * (b[index] || 0);
       }, 0);
       message = 'Я прошёл ' + length + ' метров';
     } else {
-      var sum = a.reduce(function(result, current) {
+      var sum = a.reduce(function (result, current) {
         return result + current;
       }, 0);
       message = 'Я прошёл ' + sum + ' шагов';
