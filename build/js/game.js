@@ -378,20 +378,75 @@
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      var message = '';
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          message = 'you have won!';
           break;
         case Verdict.FAIL:
-          console.log('you have failed!');
+          message = 'you have failed!';
           break;
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          message = 'game is on pause!';
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          message = 'welcome to the game! Press Space to start';
           break;
       }
+      this._balloonMessage(message, 200);
+    },
+
+    /**
+     * Отрисовка сообщения.
+     * @param {string} message  Текст сообщения.
+     * @param {number} width    Ширина попапа, в который будет вписано сообщение.
+     * @param {number} [margin] Отступ от текста до границ балуна.
+     * @private
+     */
+    _balloonMessage: function(message, width, margin) {
+      var self = this,
+        LINE_HEIGHT = 20,
+        words = message.split(' '),
+        lines = [],
+        line = '';
+
+      margin = margin || 10;
+
+      this.ctx.font = '16px PT Mono';
+      this.ctx.textBaseline = 'middle';
+
+      words.forEach(function(item, index, array) {
+        var tmpLine = line + item + ' ',
+          tmpWidth = self.ctx.measureText(tmpLine).width + margin * 2;
+        if (tmpWidth > width) {
+          lines.push(line);
+          line = item + ' ';
+        } else if (typeof array[index + 1] === 'undefined') {
+          lines.push(line + item);
+        } else {
+          line = tmpLine;
+        }
+      });
+
+      var balloon = {
+        x: (self.canvas.width - width) / 2,
+        y: (self.canvas.height - lines.length * LINE_HEIGHT) / 2
+      };
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+      this.ctx.fillRect(balloon.x + 10, balloon.y + 10, width, lines.length * LINE_HEIGHT + margin * 2);
+
+      this.ctx.fillStyle = '#FFF';
+      this.ctx.fillRect(balloon.x, balloon.y, width, lines.length * LINE_HEIGHT + margin * 2);
+
+      this.ctx.fillStyle = '#000';
+      lines.forEach(function(item, index) {
+        var offset = {
+          x: balloon.x + ((width - self.ctx.measureText(item).width) / 2),
+          y: balloon.y + margin + (index * LINE_HEIGHT) + (LINE_HEIGHT / 2)
+        };
+
+        self.ctx.fillText(item, offset.x, offset.y);
+      });
     },
 
     /**
