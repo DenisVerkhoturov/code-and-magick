@@ -400,24 +400,21 @@
      * Отрисовка сообщения.
      * @param {string} message  Текст сообщения.
      * @param {number} width    Ширина попапа, в который будет вписано сообщение.
-     * @param {number} [margin] Отступ от текста до границ балуна.
      * @private
      */
-    _balloonMessage: function(message, width, margin) {
+    _balloonMessage: function(message, width) {
       var self = this,
         LINE_HEIGHT = 20,
         words = message.split(' '),
         lines = [],
         line = '';
 
-      margin = margin || 10;
-
       this.ctx.font = '16px PT Mono';
       this.ctx.textBaseline = 'middle';
 
       words.forEach(function(item, index, array) {
         var tmpLine = line + item + ' ',
-          tmpWidth = self.ctx.measureText(tmpLine).width + margin * 2;
+          tmpWidth = self.ctx.measureText(tmpLine).width;
         if (tmpWidth > width) {
           lines.push(line);
           line = item + ' ';
@@ -429,20 +426,38 @@
       });
 
       var balloon = {
-        x: (self.canvas.width - width) / 2,
-        y: (self.canvas.height - lines.length * LINE_HEIGHT) / 2
-      };
+          x: (self.canvas.width - width) / 2,
+          y: (self.canvas.height - lines.length * LINE_HEIGHT) / 2
+        },
+        points = [
+          { x: balloon.x - Math.random() * 10, y: balloon.y - Math.random() * 10 },
+          { x: balloon.x + width + Math.random() * 10, y: balloon.y - Math.random() * 10 },
+          { x: balloon.x + width + Math.random() * 10, y: balloon.y + (lines.length * LINE_HEIGHT) + Math.random() * 10 },
+          { x: balloon.x - Math.random() * 10, y: balloon.y + (lines.length * LINE_HEIGHT) + Math.random() * 10 }
+        ];
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-      this.ctx.fillRect(balloon.x + 10, balloon.y + 10, width, lines.length * LINE_HEIGHT + margin * 2);
+      this.ctx.beginPath();
+      points.forEach(function(item) {
+        self.ctx.lineTo(item.x + 10, item.y + 10);
+      });
+      this.ctx.closePath();
+      this.ctx.stroke();
+      this.ctx.fill();
 
       this.ctx.fillStyle = '#FFF';
-      this.ctx.fillRect(balloon.x, balloon.y, width, lines.length * LINE_HEIGHT + margin * 2);
+      this.ctx.beginPath();
+      points.forEach(function(item) {
+        self.ctx.lineTo(item.x, item.y);
+      });
+      this.ctx.closePath();
+      this.ctx.stroke();
+      this.ctx.fill();
 
       this.ctx.fillStyle = '#000';
       lines.forEach(function(item, index) {
         var offset = {
           x: balloon.x + ((width - self.ctx.measureText(item).width) / 2),
-          y: balloon.y + margin + (index * LINE_HEIGHT) + (LINE_HEIGHT / 2)
+          y: balloon.y + (index * LINE_HEIGHT) + (LINE_HEIGHT / 2)
         };
 
         self.ctx.fillText(item, offset.x, offset.y);
