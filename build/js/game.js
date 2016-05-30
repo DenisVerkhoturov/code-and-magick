@@ -403,8 +403,7 @@
      * @private
      */
     _balloonMessage: function(message, width) {
-      var self = this,
-        LINE_HEIGHT = 20,
+      var lineHeight = 20,
         words = message.split(' '),
         lines = [],
         line = '';
@@ -413,9 +412,8 @@
       this.ctx.textBaseline = 'middle';
 
       words.forEach(function(item, index, array) {
-        var tmpLine = line + item + ' ',
-          tmpWidth = self.ctx.measureText(tmpLine).width;
-        if (tmpWidth > width) {
+        var tmpLine = line + item + ' ';
+        if (this.ctx.measureText(tmpLine).width > width) {
           lines.push(line);
           line = item + ' ';
         } else if (typeof array[index + 1] === 'undefined') {
@@ -423,23 +421,23 @@
         } else {
           line = tmpLine;
         }
-      });
+      }, this);
 
       var balloon = {
-          x: (self.canvas.width - width) / 2,
-          y: (self.canvas.height - lines.length * LINE_HEIGHT) / 2
+          x: (this.canvas.width - width) / 2,
+          y: (this.canvas.height - lines.length * lineHeight) / 2
         },
         points = [
           { x: balloon.x - Math.random() * 10, y: balloon.y - Math.random() * 10 },
           { x: balloon.x + width + Math.random() * 10, y: balloon.y - Math.random() * 10 },
-          { x: balloon.x + width + Math.random() * 10, y: balloon.y + (lines.length * LINE_HEIGHT) + Math.random() * 10 },
-          { x: balloon.x - Math.random() * 10, y: balloon.y + (lines.length * LINE_HEIGHT) + Math.random() * 10 }
+          { x: balloon.x + width + Math.random() * 10, y: balloon.y + (lines.length * lineHeight) + Math.random() * 10 },
+          { x: balloon.x - Math.random() * 10, y: balloon.y + (lines.length * lineHeight) + Math.random() * 10 }
         ];
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
       this.ctx.beginPath();
       points.forEach(function(item) {
-        self.ctx.lineTo(item.x + 10, item.y + 10);
-      });
+        this.ctx.lineTo(item.x + 10, item.y + 10);
+      }, this);
       this.ctx.closePath();
       this.ctx.stroke();
       this.ctx.fill();
@@ -447,8 +445,8 @@
       this.ctx.fillStyle = '#FFF';
       this.ctx.beginPath();
       points.forEach(function(item) {
-        self.ctx.lineTo(item.x, item.y);
-      });
+        this.ctx.lineTo(item.x, item.y);
+      }, this);
       this.ctx.closePath();
       this.ctx.stroke();
       this.ctx.fill();
@@ -456,12 +454,12 @@
       this.ctx.fillStyle = '#000';
       lines.forEach(function(item, index) {
         var offset = {
-          x: balloon.x + ((width - self.ctx.measureText(item).width) / 2),
-          y: balloon.y + (index * LINE_HEIGHT) + (LINE_HEIGHT / 2)
+          x: balloon.x + ((width - this.ctx.measureText(item).width) / 2),
+          y: balloon.y + (index * lineHeight) + (lineHeight / 2)
         };
 
-        self.ctx.fillText(item, offset.x, offset.y);
-      });
+        this.ctx.fillText(item, offset.x, offset.y);
+      }, this);
     },
 
     /**
