@@ -399,7 +399,7 @@
     /**
      * Отрисовка сообщения.
      * @param {string} message  Текст сообщения.
-     * @param {number} width    Ширина попапа, в который будет вписано сообщение.
+     * @param {number} width    Ширина, в которую необходимо вписать сообщение.
      * @private
      */
     _balloonMessage: function(message, width) {
@@ -411,15 +411,15 @@
       this.ctx.font = '16px PT Mono';
       this.ctx.textBaseline = 'middle';
 
-      words.forEach(function(item, index, array) {
-        var tmpLine = line + item + ' ';
-        if (this.ctx.measureText(tmpLine).width > width) {
+      words.forEach(function(word, index, words) {
+        var measurerLine = line + word + ' ';
+        if (this.ctx.measureText(measurerLine).width > width) {
           lines.push(line);
-          line = item + ' ';
-        } else if (typeof array[index + 1] === 'undefined') {
-          lines.push(line + item);
+          line = word + ' ';
+        } else if (typeof words[index + 1] === 'undefined') {
+          lines.push(line + word);
         } else {
-          line = tmpLine;
+          line = measurerLine;
         }
       }, this);
 
@@ -435,8 +435,8 @@
         ];
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
       this.ctx.beginPath();
-      points.forEach(function(item) {
-        this.ctx.lineTo(item.x + 10, item.y + 10);
+      points.forEach(function(point) {
+        this.ctx.lineTo(point.x + 10, point.y + 10);
       }, this);
       this.ctx.closePath();
       this.ctx.stroke();
@@ -444,21 +444,21 @@
 
       this.ctx.fillStyle = '#FFF';
       this.ctx.beginPath();
-      points.forEach(function(item) {
-        this.ctx.lineTo(item.x, item.y);
+      points.forEach(function(point) {
+        this.ctx.lineTo(point.x, point.y);
       }, this);
       this.ctx.closePath();
       this.ctx.stroke();
       this.ctx.fill();
 
       this.ctx.fillStyle = '#000';
-      lines.forEach(function(item, index) {
+      lines.forEach(function(line, index) {
         var offset = {
-          x: balloon.x + ((width - this.ctx.measureText(item).width) / 2),
+          x: balloon.x + ((width - this.ctx.measureText(line).width) / 2),
           y: balloon.y + (index * lineHeight) + (lineHeight / 2)
         };
 
-        this.ctx.fillText(item, offset.x, offset.y);
+        this.ctx.fillText(line, offset.x, offset.y);
       }, this);
     },
 
