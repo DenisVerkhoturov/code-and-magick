@@ -406,20 +406,20 @@
       var lineHeight = 20,
         words = message.split(' '),
         lines = [],
-        line = '';
+        currentLine = '';
 
       this.ctx.font = '16px PT Mono';
       this.ctx.textBaseline = 'middle';
 
-      words.forEach(function(word, index, words) {
-        var measurerLine = line + word + ' ';
+      words.forEach(function(word, index) {
+        var measurerLine = currentLine + word + ' ';
         if (this.ctx.measureText(measurerLine).width > width) {
-          lines.push(line);
-          line = word + ' ';
+          lines.push(currentLine);
+          currentLine = word + ' ';
         } else if (typeof words[index + 1] === 'undefined') {
-          lines.push(line + word);
+          lines.push(currentLine + word);
         } else {
-          line = measurerLine;
+          currentLine = measurerLine;
         }
       }, this);
 
