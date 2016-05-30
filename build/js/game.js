@@ -378,20 +378,90 @@
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      var message = '';
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          message = 'you have won!';
           break;
         case Verdict.FAIL:
-          console.log('you have failed!');
+          message = 'you have failed!';
           break;
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          message = 'game is on pause!';
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          message = 'welcome to the game! Press Space to start';
           break;
       }
+      this._balloonMessage(message, 200);
+    },
+
+    /**
+     * Отрисовка сообщения.
+     * @param {string} message  Текст сообщения.
+     * @param {number} width    Ширина попапа, в который будет вписано сообщение.
+     * @private
+     */
+    _balloonMessage: function(message, width) {
+      var self = this,
+        LINE_HEIGHT = 20,
+        words = message.split(' '),
+        lines = [],
+        line = '';
+
+      this.ctx.font = '16px PT Mono';
+      this.ctx.textBaseline = 'middle';
+
+      words.forEach(function(item, index, array) {
+        var tmpLine = line + item + ' ',
+          tmpWidth = self.ctx.measureText(tmpLine).width;
+        if (tmpWidth > width) {
+          lines.push(line);
+          line = item + ' ';
+        } else if (typeof array[index + 1] === 'undefined') {
+          lines.push(line + item);
+        } else {
+          line = tmpLine;
+        }
+      });
+
+      var balloon = {
+          x: (self.canvas.width - width) / 2,
+          y: (self.canvas.height - lines.length * LINE_HEIGHT) / 2
+        },
+        points = [
+          { x: balloon.x - Math.random() * 10, y: balloon.y - Math.random() * 10 },
+          { x: balloon.x + width + Math.random() * 10, y: balloon.y - Math.random() * 10 },
+          { x: balloon.x + width + Math.random() * 10, y: balloon.y + (lines.length * LINE_HEIGHT) + Math.random() * 10 },
+          { x: balloon.x - Math.random() * 10, y: balloon.y + (lines.length * LINE_HEIGHT) + Math.random() * 10 }
+        ];
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+      this.ctx.beginPath();
+      points.forEach(function(item) {
+        self.ctx.lineTo(item.x + 10, item.y + 10);
+      });
+      this.ctx.closePath();
+      this.ctx.stroke();
+      this.ctx.fill();
+
+      this.ctx.fillStyle = '#FFF';
+      this.ctx.beginPath();
+      points.forEach(function(item) {
+        self.ctx.lineTo(item.x, item.y);
+      });
+      this.ctx.closePath();
+      this.ctx.stroke();
+      this.ctx.fill();
+
+      this.ctx.fillStyle = '#000';
+      lines.forEach(function(item, index) {
+        var offset = {
+          x: balloon.x + ((width - self.ctx.measureText(item).width) / 2),
+          y: balloon.y + (index * LINE_HEIGHT) + (LINE_HEIGHT / 2)
+        };
+
+        self.ctx.fillText(item, offset.x, offset.y);
+      });
     },
 
     /**
