@@ -1,6 +1,9 @@
 'use strict';
 
 (function() {
+
+  var browserCookies = require('browser-cookies');
+
   var formContainer = document.querySelector('.overlay-container'),
     formOpenButton = document.querySelector('.reviews-controls-new'),
     formCloseButton = document.querySelector('.review-form-close'),
@@ -12,6 +15,33 @@
     reviewFieldsName = reviewFields.querySelector('[for="review-name"]'),
     reviewFieldsText = reviewFields.querySelector('[for="review-text"]'),
     formSubmitButton = form.querySelector('button[type="submit"]'),
+    getExpires = function() {
+      var currentDate = new Date(),
+        myBirthDate = new Date(currentDate.getFullYear(), 5, 15);
+
+      if (myBirthDate > currentDate) {
+        myBirthDate.setFullYear(currentDate.getFullYear() - 1);
+      }
+
+      return new Date(currentDate.getTime() + (currentDate.getTime() - myBirthDate.getTime()));
+    },
+    saveCookies = function() {
+      var expiresDate = getExpires;
+      browserCookies.set('mark', getCurrentMark(), { expires: expiresDate });
+      browserCookies.set('name', nameInput.value, { expires: expiresDate });
+    },
+    setDefaultFromCookies = function() {
+      var markCookie = browserCookies.get('mark'),
+        nameCookie = browserCookies.get('name');
+
+      if (markCookie) {
+        markGroup.querySelector('input[name="review-mark"][value="' + markCookie + '"]').checked = true;
+      }
+
+      if (nameCookie) {
+        nameInput.value = browserCookies.get('name');
+      }
+    },
     getCurrentMark = function() {
       return markGroup.querySelector('input[name="review-mark"]:checked').value;
     },
@@ -52,6 +82,8 @@
   markGroup.addEventListener('change', formValidate);
   nameInput.addEventListener('input', formValidate);
   textInput.addEventListener('input', formValidate);
+  form.addEventListener('submit', saveCookies);
   nameInput.required = true;
+  setDefaultFromCookies();
   formValidate();
 })();
