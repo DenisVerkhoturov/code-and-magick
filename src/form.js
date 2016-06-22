@@ -26,7 +26,7 @@
       return new Date(currentDate.getTime() + (currentDate.getTime() - myBirthDate.getTime()));
     },
     saveCookies = function() {
-      var expiresDate = getExpires;
+      var expiresDate = getExpires();
       browserCookies.set('mark', getCurrentMark(), { expires: expiresDate });
       browserCookies.set('name', nameInput.value, { expires: expiresDate });
     },
