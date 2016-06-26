@@ -204,7 +204,7 @@
   function setFiltrationEnabled() {
     var filters = filterContainer.querySelectorAll('input[type="radio"]');
 
-    Array.prototype.forEach.call(filters, function(filter) {
+    Array.prototype.slice.call(filters).forEach(function(filter) {
       filter.addEventListener('click', function() {
         renderByFilter(this.id);
       });
