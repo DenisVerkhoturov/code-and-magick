@@ -119,13 +119,16 @@
   </article>
 </template>
 
+<template id="message-template">
+  <p class="message"></p>
+</template>
+
 <script>
   var reviews = [],
     __reviewsLoadCallback = function(data) {
       reviews = data;
     };
 </script>
-<script src="//up.htmlacademy.ru/assets/js_intensive/jsonp/reviews.js"></script>
 <script src="js/main.js"></script>
 
 </body>
