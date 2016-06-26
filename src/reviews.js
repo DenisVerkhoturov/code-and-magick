@@ -204,11 +204,11 @@
   function setFiltrationEnabled() {
     var filters = filterContainer.querySelectorAll('input[type="radio"]');
 
-    filters.forEach(function(filter) {
-      filter.addEventListener('click', function() {
+    for (var i = 0; i < filters.length; i++) {
+      filters[i].addEventListener('click', function() {
         renderByFilter(this.id);
       });
-    });
+    }
   }
 
   getReviews(renderReviews);
