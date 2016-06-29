@@ -17,7 +17,10 @@
     IMAGE_LOAD_TIMEOUT = 5000,
 
     /** @constant {number} */
-    RATING_STAR_WIDTH = 30;
+    RATING_STAR_WIDTH = 30,
+
+    /** @constant {number} */
+    PAGE_SIZE = 3;
 
   /** Перечисления */
   var
@@ -36,18 +39,26 @@
     reviewTemplate = getTemplateWithFallback('template#review-template', 'article.review'),
 
     /** @type {Element} */
+    messageTemplate = getTemplateWithFallback('template#message-template', 'p.message'),
+
+    /** @type {Element} */
     filterContainer = document.querySelector('form.reviews-filter'),
 
     /** @type {Element} */
     reviewsContainer = document.querySelector('div.reviews-list'),
 
-    /** @type {Element} */
-    messageTemplate = getTemplateWithFallback('template#message-template', 'p.message');
+    showMore = document.querySelector('span.reviews-controls-more');
 
   /** Перемененные */
   var
     /** @type {Array.<Object>} */
-    reviews = [];
+    reviews = [],
+
+    /** @type {Array.<Object>} */
+    filteredReviews = [],
+
+    /** @type {number} */
+    pageNumber = 0;
 
   /**
    * @param {function(Array.<Object>)} callback
@@ -64,9 +75,9 @@
 
     xhr.onload = function() {
       if (xhr.status === 200) {
-        reviews = JSON.parse(xhr.responseText);
+        filteredReviews = reviews = JSON.parse(xhr.responseText);
         reviewsContainer.classList.remove('reviews-list-loading');
-        callback(reviews);
+        callback(reviews, 0);
       } else {
         xhr.onerror();
       }
@@ -94,21 +105,33 @@
 
   /**
    * @param {Array.<Object>} list
+   * @param {number} page
    */
-  function renderReviews(list) {
-    reviewsContainer.innerHTML = '';
-    filterContainer.classList.add('invisible');
+  function renderReviews(list, page) {
+    var from = page * PAGE_SIZE,
+      to = from + PAGE_SIZE,
+      isLastPage = page === Math.floor(list.length / PAGE_SIZE);
+
+    if (page === 0) {
+      reviewsContainer.innerHTML = '';
+    }
 
     if (list.length > 0) {
-      list.forEach(function(review) {
+      list.slice(from, to).forEach(function(review) {
         reviewsContainer.appendChild(buildReviewElement(review));
       });
     } else {
       var message = messageTemplate.cloneNode(true);
-      message.textContent = 'Не найдено ни одно отзыва.';
+      message.textContent = 'Не найдено ни одного отзыва.';
+      reviewsContainer.innerHTML = '';
       reviewsContainer.appendChild(message);
     }
-    filterContainer.classList.remove('invisible');
+
+    if (isLastPage) {
+      showMore.classList.add('invisible');
+    } else {
+      showMore.classList.remove('invisible');
+    }
   }
 
   /**
@@ -144,8 +167,9 @@
 
   /**
    * @param {Filter.<String>} filter
+   * @return {Array.<Object>}
    */
-  function renderByFilter(filter) {
+  function filterReviewsByFilter(filter) {
     var list;
 
     switch (filter) {
@@ -198,19 +222,26 @@
         break;
     }
 
-    renderReviews(list);
+    return list;
   }
 
-  function setFiltrationEnabled() {
-    var filters = filterContainer.querySelectorAll('input[type="radio"]');
-
-    Array.prototype.slice.call(filters).forEach(function(filter) {
-      filter.addEventListener('click', function() {
-        renderByFilter(this.id);
-      });
+  function init() {
+    filterContainer.addEventListener('click', function(evt) {
+      if (evt.target.classList.contains('reviews-filter-item')) {
+        filteredReviews = filterReviewsByFilter(evt.target.getAttribute('for'));
+        pageNumber = 0;
+        renderReviews(filteredReviews, pageNumber);
+      }
     });
+
+    showMore.addEventListener('click', function() {
+      pageNumber++;
+      renderReviews(filteredReviews, pageNumber);
+    });
+
+    showMore.classList.remove('invisible');
   }
 
   getReviews(renderReviews);
-  setFiltrationEnabled();
+  init();
 })();
