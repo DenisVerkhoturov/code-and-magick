@@ -228,7 +228,7 @@
   function init() {
     filterContainer.addEventListener('click', function(evt) {
       if (evt.target.classList.contains('reviews-filter-item')) {
-        filteredReviews = filterReviewsByFilter(evt.target.id);
+        filteredReviews = filterReviewsByFilter(evt.target.getAttribute('for'));
         pageNumber = 0;
         renderReviews(filteredReviews, pageNumber);
       }
