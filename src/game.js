@@ -776,16 +776,16 @@
   }
 
   window.addEventListener('scroll', throttle(function() {
-    if (clouds.getBoundingClientRect().bottom < 0) {
-      game.setGameStatus(Game.Verdict.PAUSE);
-    } else {
-      isCloudsVisible = true;
-    }
+    isCloudsVisible = clouds.getBoundingClientRect().bottom >= 0;
   }, 100));
 
   window.addEventListener('scroll', function() {
     if (isCloudsVisible) {
       clouds.style.backgroundPositionX = document.body.scrollTop / 4 + 'px';
+    }
+
+    if (game.container.getBoundingClientRect().bottom < 0) {
+      game.setGameStatus(Game.Verdict.PAUSE);
     }
   });
 })();
