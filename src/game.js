@@ -759,15 +759,16 @@
   /**
    * @param {Function} callback
    * @param {number} delay
+   * @param {*} [thisArg]
    * @returns {Function}
      */
-  function throttle(callback, delay) {
+  function throttle(callback, delay, thisArg) {
     var isCallNeeded = true;
 
     return function() {
       if (isCallNeeded) {
         isCallNeeded = false;
-        callback.apply(null, arguments);
+        callback.apply(thisArg, arguments);
         setTimeout(function() {
           isCallNeeded = true;
         }, delay);
