@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+define('game', function() {
   /**
    * @const
    * @type {number}
@@ -250,6 +250,7 @@
     this.canvas.width = container.clientWidth;
     this.canvas.height = container.clientHeight;
     this.container.appendChild(this.canvas);
+    this.Verdict = Verdict;
 
     this.ctx = this.canvas.getContext('2d');
 
@@ -746,47 +747,5 @@
     }
   };
 
-  window.Game = Game;
-  window.Game.Verdict = Verdict;
-
-  var game = new Game(document.querySelector('.demo'));
-  game.initializeLevelAndStart();
-  game.setGameStatus(window.Game.Verdict.INTRO);
-
-  var clouds = document.querySelector('.header-clouds'),
-    isCloudsVisible = true;
-
-  /**
-   * @param {Function} callback
-   * @param {number} delay
-   * @param {*} [thisArg]
-   * @returns {Function}
-     */
-  function throttle(callback, delay, thisArg) {
-    var isCallNeeded = true;
-
-    return function() {
-      if (isCallNeeded) {
-        isCallNeeded = false;
-        callback.apply(thisArg, arguments);
-        setTimeout(function() {
-          isCallNeeded = true;
-        }, delay);
-      }
-    };
-  }
-
-  window.addEventListener('scroll', throttle(function() {
-    isCloudsVisible = clouds.getBoundingClientRect().bottom >= 0;
-  }, 100));
-
-  window.addEventListener('scroll', function() {
-    if (isCloudsVisible) {
-      clouds.style.backgroundPositionX = document.body.scrollTop / 4 + 'px';
-    }
-
-    if (game.container.getBoundingClientRect().bottom < 0) {
-      game.setGameStatus(Game.Verdict.PAUSE);
-    }
-  });
-})();
+  return Game;
+});
