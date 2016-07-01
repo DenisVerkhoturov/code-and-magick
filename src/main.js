@@ -5,9 +5,10 @@ require(
     './utilities',
     './form',
     './game',
-    './reviews'
+    './reviews',
+    './gallery'
   ],
-  function(utils, form, Game) {
+  function(utils, form, Game, reviews, gallery) {
     var game = new Game(document.querySelector('.demo')),
       clouds = document.querySelector('.header-clouds'),
       isCloudsVisible = true;
@@ -26,6 +27,19 @@ require(
 
       if (game.container.getBoundingClientRect().bottom < 0) {
         game.setGameStatus(game.Verdict.PAUSE);
+      }
+    });
+
+    var photoGallery = document.querySelector('.photogallery'),
+      pictures = [].map.call(photoGallery.querySelectorAll('.photogallery-image img'), function(img) {
+        return img.src;
+      });
+
+    gallery.setPictures(pictures);
+
+    photoGallery.addEventListener('click', function(evt) {
+      if (evt.target.nodeName === 'IMG') {
+        gallery.show(pictures.indexOf(evt.target.src));
       }
     });
   });
