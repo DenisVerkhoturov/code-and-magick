@@ -32,21 +32,31 @@ define(
     function prev() {
       if (current > 0) {
         current--;
-        update();
+        render();
       }
     }
 
     function next() {
       if (current < pictures.length - 1) {
         current++;
-        update();
+        render();
       }
     }
 
-    function update() {
-      preview.style.backgroundImage = 'url("' + pictures[current] + '")';
+    function render() {
+      /** @type {Image} */
+      var img = new Image();
+
       currentIndicator.textContent = current + 1;
       totalIndicator.textContent = pictures.length;
+
+      img.onload = function() {
+        preview.style.width = this.width + 'px';
+        preview.style.height = this.height + 'px';
+        preview.style.backgroundImage = 'url("' + this.src + '")';
+      };
+
+      img.src = pictures[current];
     }
 
     /**
@@ -74,12 +84,13 @@ define(
       if (index < pictures.length) {
         current = index;
       }
-      update();
+      render();
       container.classList.remove('invisible');
       prevBtn.addEventListener('click', prev);
       nextBtn.addEventListener('click', next);
       closeBtn.addEventListener('click', hide);
       document.body.addEventListener('keyup', onDocumentKeyDown);
+      document.body.style.overflow = 'hidden';
     }
 
     function hide() {
@@ -88,6 +99,7 @@ define(
       nextBtn.removeEventListener('click', next);
       closeBtn.removeEventListener('click', hide);
       document.body.removeEventListener('keyup', onDocumentKeyDown);
+      document.body.style.overflow = null;
     }
 
     return {
