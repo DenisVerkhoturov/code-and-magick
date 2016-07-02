@@ -9,7 +9,9 @@ define(
   'review',
   ['./utilities'],
   function(utils) {
-    var IMAGE_WIDTH = 124,
+    var
+      /** @constant {number} */
+      IMAGE_WIDTH = 124,
       /** @constant {number} */
       IMAGE_HEIGHT = 124,
       /** @constant {number} */
@@ -64,10 +66,27 @@ define(
       };
 
       this.remove = function() {
+        this.element.removeEventListener('click', this.handler);
         this.element.parentNode.removeChild(this.element);
       };
 
-      this.handler = function() {};
+      /**
+       * @param {Event} evt
+       */
+      this.handler = function(evt) {
+        if (evt.target.classList.contains('review-quiz-answer')) {
+          Array.prototype.forEach.call(
+            this.element.querySelectorAll('.review-quiz-answer'),
+            function(answer) {
+              answer.classList.remove('review-quiz-answer-active');
+            }
+          );
+          evt.target.classList.add('review-quiz-answer-active');
+        }
+      };
+
+      this.handler = this.handler.bind(this);
+      this.element.addEventListener('click', this.handler);
     }
 
     return Review;
