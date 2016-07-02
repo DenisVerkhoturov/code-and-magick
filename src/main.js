@@ -42,4 +42,6 @@ require(
         gallery.show(pictures.indexOf(evt.target.src));
       }
     });
+
+    reviews.init();
   });

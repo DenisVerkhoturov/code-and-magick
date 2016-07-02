@@ -9,6 +9,7 @@ define('utilities', function() {
      * @param {function()} [process]
      */
     ajax: function(url, resolve, reject, process) {
+      console.log(url);
       var xhr = new XMLHttpRequest();
 
       xhr.timeout = process;
@@ -16,14 +17,14 @@ define('utilities', function() {
 
       xhr.onload = function() {
         if (xhr.status === 200) {
-          var response = JSON.parse(xhr.responseText);
-          resolve(response);
+          resolve(JSON.parse(xhr.responseText));
         } else {
           xhr.onerror();
         }
       };
 
-      xhr.open('GET', url).send();
+      xhr.open('GET', url);
+      xhr.send();
     },
     /**
      * @param {function} callback
@@ -42,6 +43,26 @@ define('utilities', function() {
           }, delay);
         }
       };
+    },
+    /**
+     * @param {Element|string} template
+     * @param {string} selector
+     * @returns {Node}
+     */
+    getElement: function(template, selector) {
+      var element;
+
+      if (typeof template === 'string') {
+        template = document.querySelector(template);
+      }
+
+      if ('content' in template) {
+        element = template.content.querySelector(selector);
+      } else {
+        element = template.querySelector(selector);
+      }
+
+      return element.cloneNode(true);
     }
   };
 });
