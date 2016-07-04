@@ -79,19 +79,19 @@ define(
       this.list.onempty = function() {
         return new utils.Message(messageElement, 'К сожалению, ничего не найдено...');
       };
-
-      this.restoreState = function() {
-        var storageFilterElement = document.getElementById(localStorage.getItem('filter')),
-          currentFilter = FILTERS.filter(function(filter) {
-            return filter.element === storageFilterElement;
-          }).pop();
-
-        if (currentFilter) {
-          storageFilterElement.checked = true;
-          this.filters.current = currentFilter;
-        }
-      };
     }
+
+    Reviews.prototype.restoreState = function() {
+      var storageFilterElement = document.getElementById(localStorage.getItem('filter')),
+        currentFilter = FILTERS.filter(function(filter) {
+          return filter.element === storageFilterElement;
+        }).pop();
+
+      if (currentFilter) {
+        storageFilterElement.checked = true;
+        this.filters.current = currentFilter;
+      }
+    };
 
     return {
       init: function() {
