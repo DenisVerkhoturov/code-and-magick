@@ -68,11 +68,11 @@ define(
      */
     function Reviews(objects) {
       this.data = objects;
-      this.element = '';
       this.filters = new utils.Filters(filtersElement, FILTERS);
       this.list = new utils.PaginatedList(listElement, moreBtn, this.data, Review, 3);
 
-      this.filters.onchange = function(filter) {
+      this.filters.onchange = function(element, filter) {
+        localStorage.setItem('filter', element.value);
         this.list.objects = filter(this.data);
       }.bind(this);
 
@@ -80,8 +80,16 @@ define(
         return new utils.Message(messageElement, 'К сожалению, ничего не найдено...');
       };
 
-      this.render = function() {
-        this.list.render();
+      this.restoreState = function() {
+        var storageFilterElement = document.getElementById(localStorage.getItem('filter')),
+          currentFilter = FILTERS.filter(function(filter) {
+            return filter.element === storageFilterElement;
+          }).pop();
+
+        if (currentFilter) {
+          storageFilterElement.checked = true;
+          this.filters.current = currentFilter;
+        }
       };
     }
 
@@ -90,7 +98,7 @@ define(
         var reviews;
         utils.ajax(url, function(response) {
           reviews = new Reviews(response);
-          reviews.render();
+          reviews.restoreState();
         });
       }
     };

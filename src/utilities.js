@@ -82,7 +82,7 @@ define('utilities', function() {
      * @param {Element} element
      * @param {string} text
      * @constructor
-       */
+     */
     Message: function(element, text) {
       this.element = element;
       this.element.textContent = text;
@@ -113,23 +113,24 @@ define('utilities', function() {
     /**
      * @param {Element} element
      * @param {Array.<Filter>} filters
-     * @param {Filter} [current = filters[0]]
+     * @param {number} [currentIndex = 0]
      * @constructor
      */
-    Filters: function(element, filters, current) {
-      current = typeof current === 'undefined' ? filters[0] : current;
+    Filters: function(element, filters, currentIndex) {
+      currentIndex = typeof currentIndex === 'undefined' ? 0 : currentIndex;
+
       this.element = element;
       this.filters = filters;
-      /** @type {function(Array)} */
+      /** @type {function(Filter, Array)} */
       this.onchange = 'undefined';
 
-      var _current = current;
+      var _current = filters[currentIndex];
 
       Object.defineProperty(this, 'current', {
         set: function(value) {
           _current = value;
           if (typeof this.onchange === 'function') {
-            this.onchange(_current.filter);
+            this.onchange(_current.element, _current.filter);
           }
         },
         get: function() {
@@ -206,9 +207,9 @@ define('utilities', function() {
             this.element.appendChild(object.render());
           }, this);
         } else if (typeof this.onempty === 'function') {
-          var message = this.onempty();
-          renderedObjects.push(message);
-          this.element.appendChild(message.render());
+          var empty = this.onempty();
+          renderedObjects.push(empty);
+          this.element.appendChild(empty.render());
         }
         this.more.classList.toggle('invisible', this.isPageLast);
       };
