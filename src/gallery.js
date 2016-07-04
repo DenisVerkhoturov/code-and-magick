@@ -28,6 +28,8 @@ define(
 
       this.show = this.show.bind(this);
       this.hide = this.hide.bind(this);
+      this.prev = this.prev.bind(this);
+      this.next = this.next.bind(this);
       this._onDocumentKeyDown = this._onDocumentKeyDown.bind(this);
       this._onHashChange = this._onHashChange.bind(this);
       window.addEventListener('hashchange', this._onHashChange);
