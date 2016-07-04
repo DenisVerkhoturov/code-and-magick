@@ -31,4 +31,5 @@ require(
     });
 
     reviews.init();
-  });
+  }
+);

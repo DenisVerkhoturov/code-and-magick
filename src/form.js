@@ -15,6 +15,8 @@ define(
       reviewFieldsName = reviewFields.querySelector('[for="review-name"]'),
       reviewFieldsText = reviewFields.querySelector('[for="review-text"]'),
       formSubmitButton = form.querySelector('button[type="submit"]'),
+      nameMessage = document.createElement('P'),
+      reviewMessage = document.createElement('P'),
       getExpires = function() {
         var currentDate = new Date(),
           myBirthDate = new Date(currentDate.getFullYear(), 5, 15);
@@ -50,14 +52,20 @@ define(
 
         if (nameInput.checkValidity()) {
           reviewFieldsName.classList.add('invisible');
+          nameMessage.classList.add('invisible');
         } else {
           reviewFieldsName.classList.remove('invisible');
+          nameMessage.textContent = nameInput.validationMessage;
+          nameMessage.classList.remove('invisible');
         }
 
         if (textInput.checkValidity()) {
           reviewFieldsText.classList.add('invisible');
+          reviewMessage.classList.add('invisible');
         } else {
           reviewFieldsText.classList.remove('invisible');
+          reviewMessage.textContent = textInput.validationMessage;
+          reviewMessage.classList.remove('invisible');
         }
 
         if (nameInput.checkValidity() && textInput.checkValidity()) {
@@ -84,6 +92,8 @@ define(
     textInput.addEventListener('input', formValidate);
     form.addEventListener('submit', saveCookies);
     nameInput.required = true;
+    nameInput.parentNode.appendChild(nameMessage);
+    textInput.parentNode.appendChild(reviewMessage);
     setDefaultFromCookies();
     formValidate();
   }

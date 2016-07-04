@@ -77,7 +77,9 @@ define(
       }.bind(this);
 
       this.list.onempty = function() {
-        return new utils.Message(messageElement, 'К сожалению, ничего не найдено...');
+        var message = new utils.BaseComponent(messageElement);
+        message.element.textContent = 'К сожалению, ничего не найдено...';
+        return message;
       };
     }
 

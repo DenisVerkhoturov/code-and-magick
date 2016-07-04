@@ -39,6 +39,48 @@ define(
       this.element.addEventListener('click', this.handler);
     }
 
+    utils.inherit(Review, utils.BaseComponent);
+
+    Review.prototype.getAuthorName = function() {
+      return this.data.author.name;
+    };
+
+    Review.prototype.getAuthorPicture = function() {
+      return this.data.author.picture;
+    };
+
+    Review.prototype.getDate = function() {
+      return this.data.date;
+    };
+
+    Review.prototype.getDescription = function() {
+      return this.data.description;
+    };
+
+    Review.prototype.getRating = function() {
+      return this.data.rating;
+    };
+
+    Review.prototype.getRating = function() {
+      return this.data.review_usefulness;
+    };
+
+    Review.prototype.increaseRating = function() {
+      return this.data.rating++;
+    };
+
+    Review.prototype.decreaseRating = function() {
+      return this.data.rating--;
+    };
+
+    Review.prototype.increaseUsefulness = function() {
+      return this.data.review_usefulness++;
+    };
+
+    Review.prototype.decreaseUsefulness = function() {
+      return this.data.review_usefulness--;
+    };
+
     /**
      * @returns {Node}
      */
