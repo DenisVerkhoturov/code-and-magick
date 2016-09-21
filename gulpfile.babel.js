@@ -74,10 +74,14 @@ gulp.task('connect', () => {
  */
 gulp.task('watch', ['connect'], () => {
     gulp.watch(
-        ['src/**/*.js'],
+        ['src/html/*.html',
+        'src/sass/**/*.sass',
+        'src/**/*.js'],
         (event) => gulp.src(event.path).pipe(connect.reload())
     );
 
+    gulp.watch('src/html/*.html', ['html']);
+    gulp.watch('src/sass/**/*.sass', ['styles']);
     gulp.watch('src/**/*.js', ['scripts']);
 });
 
