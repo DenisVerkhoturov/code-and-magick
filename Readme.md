@@ -1,14 +1,7 @@
 # Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
-* Студент: [Денис Верхотуров](https://up.htmlacademy.ru/javascript/5/user/56756).
-* Наставник: [Alexander Myadzel](https://htmlacademy.ru/profile/id124304).
-
----
-
-_Не удаляйте и не обращайте внимание на файлы:_<br>
-_`.editorconfig`, `.eslintignore`, `.eslintrc`, `.gitignore`, `.travis.yml`, `package.json`._
-
----
+* Студент: [Денис Верхотуров](https://htmlacademy.ru/profile/id56756).
+* Наставник: [Иван Гунченко](https://htmlacademy.ru/profile/id3623).
 
 <a href="https://htmlacademy.ru/intensive/javascript"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/javascript/logo-for-github.svg"></a>
 
