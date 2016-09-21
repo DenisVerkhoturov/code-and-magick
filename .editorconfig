@@ -9,5 +9,5 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 
 [*.js]
-indent_brace_style = Allman
+indent_brace_style = Stroustrup
 curly_bracket_next_line = true

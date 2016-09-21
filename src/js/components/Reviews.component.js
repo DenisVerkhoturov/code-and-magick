@@ -1,32 +1,29 @@
 'use strict';
 
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { Review } from './Review.component';
 import store from '../stores/ReviewStore';
 
-export default class Reviews extends Component
+export default class Reviews extends React.Component
 {
     /**
      * @param props
      * @param {Array.<Review>} props.reviews
      */
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
         this.state = {
             reviews: store.getAll()
         };
     }
 
-    componentWillMount()
-    {
+    componentWillMount() {
         store.on('change', () => this.setState({
             reviews: store.getAll()
         }));
     }
 
-    render()
-    {
+    render() {
         const reviews = this.state.reviews.map((review, index) => {
             return (
                 <Review key={ index }
@@ -46,5 +43,5 @@ export default class Reviews extends Component
 }
 
 Reviews.propTypes = {
-    reviews: PropTypes.array
+    reviews: React.PropTypes.array
 };

@@ -7,16 +7,14 @@ export const ACTION_TYPES = {
     REMOVE_REVIEW: 'REMOVE_REVIEW'
 };
 
-export function createReview(review)
-{
+export function createReview(review) {
     dispatcher.handleAction({
         type: ACTION_TYPES.ADD_REVIEW,
         data: review
     });
 }
 
-export function removeReview(index)
-{
+export function removeReview(index) {
     dispatcher.handleAction({
         type: ACTION_TYPES.REMOVE_REVIEW,
         data: index

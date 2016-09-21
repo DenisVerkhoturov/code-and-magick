@@ -1,8 +1,8 @@
 'use strict';
 
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 
-export class Review extends Component
+export class Review extends React.Component
 {
     /**
      * @param props
@@ -12,13 +12,11 @@ export class Review extends Component
      * @param {string} props.description
      * @param {number} props.review_usefulness
      */
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
     }
 
-    render()
-    {
+    render() {
         return (
             <article className="review">
                 <img src={ this.props.avatar } className="review-author" alt="" title={ this.props.author }/>
@@ -35,9 +33,9 @@ export class Review extends Component
 }
 
 Review.propTypes = {
-    author: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    review_usefulness: PropTypes.number
+    author: React.PropTypes.string.isRequired,
+    avatar: React.PropTypes.string.isRequired,
+    rating: React.PropTypes.number.isRequired,
+    description: React.PropTypes.string.isRequired,
+    review_usefulness: React.PropTypes.number
 };

@@ -6,8 +6,7 @@ import { ACTION_TYPES } from '../actions/reviewActions';
 
 class ReviewStore extends EventEmitter
 {
-    constructor()
-    {
+    constructor() {
         super();
         this.reviews = [];
 
@@ -21,25 +20,20 @@ class ReviewStore extends EventEmitter
             });
     }
 
-    getAll()
-    {
+    getAll() {
         return this.reviews;
     }
 
-    add(review)
-    {
+    add(review) {
         this.reviews.push(review);
     }
 
-    remove(index)
-    {
+    remove(index) {
         this.reviews.splice(index, 1);
     }
 
-    handleAction(action)
-    {
-        switch (action.type)
-        {
+    handleAction(action) {
+        switch (action.type) {
         case ACTION_TYPES.ADD_REVIEW:
             this.add(action.data);
             reviewStore.emit('change');
