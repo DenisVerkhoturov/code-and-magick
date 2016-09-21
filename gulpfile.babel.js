@@ -105,4 +105,11 @@ gulp.task('clean', () => {
  */
 gulp.task('build', ['html', 'fonts', 'images', 'styles', 'scripts', 'data']);
 
+/**
+ * Test task
+ */
+gulp.task('test', () => {
+    return true;
+});
+
 gulp.task('default', ['build']);
