@@ -60,6 +60,14 @@ gulp.task('scripts', () => {
 });
 
 /**
+ * Data task
+ */
+gulp.task('data', () => {
+    return gulp.src('src/data/**/*.json')
+        .pipe(gulp.dest('build/data'));
+});
+
+/**
  * Connect task
  */
 gulp.task('connect', () => {
@@ -95,6 +103,6 @@ gulp.task('clean', () => {
 /**
  * Build task
  */
-gulp.task('build', ['html', 'fonts', 'images', 'styles', 'scripts']);
+gulp.task('build', ['html', 'fonts', 'images', 'styles', 'scripts', 'data']);
 
 gulp.task('default', ['build']);
