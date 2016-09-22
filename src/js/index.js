@@ -2,8 +2,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Reviews from './components/Reviews';
+import Main from './components/Main';
 
-const container = document.querySelector('#reviews-list');
+const container = document.querySelector('main');
 
-ReactDOM.render(<Reviews />, container);
+ReactDOM.render(<Main />, container);
