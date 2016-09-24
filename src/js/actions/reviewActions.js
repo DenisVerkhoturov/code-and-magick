@@ -2,21 +2,29 @@
 
 import dispatcher from '../dispatchers/dispatcher';
 
-export const ACTION_TYPES = {
-    ADD_REVIEW: 'ADD_ITEM',
-    REMOVE_REVIEW: 'REMOVE_REVIEW'
+export const ACTIONS = {
+    ADD: 'ADD_ITEM',
+    REMOVE: 'REMOVE_REVIEW',
+    FILTER: 'FILTER'
 };
 
-export function createReview(review) {
+export function create(review) {
     dispatcher.handleAction({
-        type: ACTION_TYPES.ADD_REVIEW,
+        type: ACTIONS.ADD,
         data: review
     });
 }
 
-export function removeReview(index) {
+export function remove(index) {
     dispatcher.handleAction({
-        type: ACTION_TYPES.REMOVE_REVIEW,
+        type: ACTIONS.REMOVE,
+        data: index
+    });
+}
+
+export function filter(index) {
+    dispatcher.handleAction({
+        type: ACTIONS.FILTER,
         data: index
     });
 }

@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import store from '../stores/ReviewStore';
 
 export default class ReviewsFilter extends React.Component
 {
@@ -9,21 +10,38 @@ export default class ReviewsFilter extends React.Component
      */
     constructor(props) {
         super(props);
+        this.state = {
+            current: store.getCurrentFilter(),
+            filters: store.getFilters()
+        };
+    }
+
+    componentWillMount() {
+        store.on('change', () => this.setState({
+            current: store.getCurrentFilter()
+        }));
     }
 
     render() {
+        const filters = [];
+        this.state.filters.forEach((filter, index) => {
+            filters.push(
+                <div key={ index } className="reviews-filter-item">
+                    <input type="radio"
+                           name="reviews"
+                           id={ index }
+                           value={ index }
+                           checked={ this.state.current === filter }
+                           onChange={ store.changeFilter.bind(store) } />
+                    <label htmlFor={ index }>
+                        { filter.name }
+                    </label>
+                </div>
+            );
+        });
         return (
             <form className="reviews-filter" action="index.html" method="get">
-                <input type="radio" name="reviews" id="reviews-all" value="reviews-all" checked/>
-                <label htmlFor="reviews-all" className="reviews-filter-item">Все</label>
-                <input type="radio" name="reviews" id="reviews-recent" value="reviews-recent"/>
-                <label htmlFor="reviews-recent" className="reviews-filter-item">Недавние</label>
-                <input type="radio" name="reviews" id="reviews-good" value="reviews-good"/>
-                <label htmlFor="reviews-good" className="reviews-filter-item">Хорошие</label>
-                <input type="radio" name="reviews" id="reviews-bad" value="reviews-bad"/>
-                <label htmlFor="reviews-bad" className="reviews-filter-item">Плохие</label>
-                <input type="radio" name="reviews" id="reviews-popular" value="reviews-popular"/>
-                <label htmlFor="reviews-popular" className="reviews-filter-item"> Популярные</label>
+                { filters }
             </form>
         );
     }

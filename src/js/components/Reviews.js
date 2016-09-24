@@ -14,7 +14,7 @@ export default class Reviews extends React.Component
     constructor(props) {
         super(props);
         this.state = {
-            reviews: store.getAll()
+            reviews: []
         };
     }
 
@@ -31,7 +31,7 @@ export default class Reviews extends React.Component
                         author={ review.author.name }
                         avatar={ review.author.picture }
                         rating={ review.rating }
-                        description={ review.description }/>
+                        description={ review.description } />
             );
         });
 

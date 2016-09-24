@@ -84,13 +84,15 @@ gulp.task('watch', ['connect'], () => {
     gulp.watch(
         ['src/html/*.html',
         'src/sass/**/*.sass',
-        'src/**/*.js'],
+        'src/**/*.js',
+        'data/*.json'],
         (event) => gulp.src(event.path).pipe(connect.reload())
     );
 
     gulp.watch('src/html/*.html', ['html']);
     gulp.watch('src/sass/**/*.sass', ['styles']);
-    gulp.watch('src/**/*.js', ['scripts']);
+    gulp.watch('src/js/**/*.js', ['scripts']);
+    gulp.watch('src/data/**/*.json', ['data']);
 });
 
 /**

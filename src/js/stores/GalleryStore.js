@@ -9,7 +9,7 @@ class PhotoStore extends EventEmitter
         super();
         this.photos = [];
 
-        fetch('data/photos.json')
+        fetch('data/gallery.json')
             .then((response) => {
                 if (response.status === 200)
                     response.json().then((data) => {
