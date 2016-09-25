@@ -5,12 +5,12 @@ import React from 'react';
 export default class Review extends React.Component
 {
     /**
-     * @param props
-     * @param {string} props.avatar
-     * @param {string} props.author
-     * @param {number} props.rating
-     * @param {string} props.description
-     * @param {number} props.review_usefulness
+     * @param {Object} props
+     * @param {String} props.avatar
+     * @param {String} props.author
+     * @param {Number} props.rating
+     * @param {String} props.description
+     * @param {Number} props.review_usefulness
      */
     constructor(props) {
         super(props);
@@ -21,7 +21,7 @@ export default class Review extends React.Component
         return (
             <article className="review">
                 <img src={ this.props.avatar } className="review-author" alt="" title={ this.props.author }/>
-                <span className={ raitingClass }>{ this.props.rating } звезд</span>
+                <span className={ raitingClass }>{ this.props.rating }</span>
                 <p className="review-text">{ this.props.description }</p>
                 <div className="review-quiz">
                     Полезный отзыв ?

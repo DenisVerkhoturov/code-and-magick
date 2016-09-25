@@ -6,7 +6,7 @@ import store from '../stores/GalleryStore';
 export default class Gallery extends React.Component
 {
     /**
-     * @param props
+     * @param {Object} props
      */
     constructor(props) {
         super(props);
@@ -26,6 +26,7 @@ export default class Gallery extends React.Component
             return (
                 <a key={ index } href="#" className="photogallery-image">
                     <img src={ photo.file }
+                         alt=""
                          width="290"
                          height="270" />
                 </a>

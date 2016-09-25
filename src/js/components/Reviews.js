@@ -8,7 +8,7 @@ import store from '../stores/ReviewStore';
 export default class Reviews extends React.Component
 {
     /**
-     * @param props
+     * @param {Object} props
      * @param {Array} props.reviews
      */
     constructor(props) {
@@ -48,7 +48,3 @@ export default class Reviews extends React.Component
         );
     }
 }
-
-Reviews.propTypes = {
-    reviews: React.PropTypes.array
-};

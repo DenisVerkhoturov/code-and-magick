@@ -6,7 +6,7 @@ import store from '../stores/ReviewStore';
 export default class ReviewsFilter extends React.Component
 {
     /**
-     * @param props
+     * @param {Object} props
      */
     constructor(props) {
         super(props);

@@ -64,6 +64,16 @@ class ReviewStore extends EventEmitter
         return this.currentFilter.process(this.reviews);
     }
 
+    /**
+     * @param {Object} review
+     * @param {Object} review.author
+     * @param {string} review.author.name
+     * @param {string} review.author.picture
+     * @param {string} review.date Date in YYYY-MM-DD format
+     * @param {number} review.review_usefulness
+     * @param {number} review.rating
+     * @param {string} review.description
+     */
     add(review) {
         this.reviews.push(review);
         reviewStore.emit('change');

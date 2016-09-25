@@ -2,6 +2,7 @@
 
 import del from 'del';
 import gulp from 'gulp';
+import eslint from 'gulp-eslint';
 import sass from 'gulp-sass';
 import rename from 'gulp-rename';
 import connect from 'gulp-connect';
@@ -108,9 +109,19 @@ gulp.task('clean', () => {
 gulp.task('build', ['html', 'fonts', 'images', 'styles', 'scripts', 'data']);
 
 /**
+ * Lint task
+ */
+gulp.task('lint', () => {
+    return gulp.src('src/js/**/*.js')
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+});
+
+/**
  * Test task
  */
-gulp.task('test', () => {
+gulp.task('test', ['lint'], () => {
     return true;
 });
 
