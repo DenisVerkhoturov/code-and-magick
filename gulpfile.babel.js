@@ -4,6 +4,7 @@ import del from 'del';
 import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 import sass from 'gulp-sass';
+import sassLint from 'gulp-sass-lint';
 import rename from 'gulp-rename';
 import connect from 'gulp-connect';
 import babelify from 'babelify';
@@ -109,14 +110,31 @@ gulp.task('clean', () => {
 gulp.task('build', ['html', 'fonts', 'images', 'styles', 'scripts', 'data']);
 
 /**
- * Lint task
+ * Lint js
  */
-gulp.task('lint', () => {
+gulp.task('lint_js', () => {
     return gulp.src('src/js/**/*.js')
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
 });
+
+/**
+ * Lint sass
+ */
+gulp.task('lint_sass', () => {
+    return gulp.src('src/sass/**/*.s+(a|c)ss')
+        .pipe(sassLint({
+            configFile: '.sass-lint.yml'
+        }))
+        .pipe(sassLint.format())
+        .pipe(sassLint.failOnError());
+});
+
+/**
+ * Lint task
+ */
+gulp.task('lint', ['lint_js', 'lint_sass']);
 
 /**
  * Test task
