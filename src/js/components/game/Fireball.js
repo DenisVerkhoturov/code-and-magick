@@ -1,5 +1,3 @@
-'use strict';
-
 import { Direction } from './constants';
 
 export default class Fireball

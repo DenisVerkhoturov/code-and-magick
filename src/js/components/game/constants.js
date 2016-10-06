@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Коды направлений.
  * @enum {number}

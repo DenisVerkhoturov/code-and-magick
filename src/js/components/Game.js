@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -41,15 +39,15 @@ export default class Game extends React.Component
             this.state.context
         ));
 
-        window.addEventListener('keydown', this._handleKeys.bind(this, true));
-        window.addEventListener('keyup', this._handleKeys.bind(this, false));
+        window.addEventListener('keydown', this.handleKeys.bind(this, true));
+        window.addEventListener('keyup', this.handleKeys.bind(this, false));
 
         requestAnimationFrame(() => this.update());
     }
 
     componentWillUnmount() {
-        window.removeEventListener('keydown', this._handleKeys);
-        window.removeEventListener('keyup', this._handleKeys);
+        window.removeEventListener('keydown', this.handleKeys);
+        window.removeEventListener('keyup', this.handleKeys);
     }
 
     update() {
@@ -65,7 +63,7 @@ export default class Game extends React.Component
      * @param {boolean} value
      * @param {KeyboardEvent} event
      */
-    _handleKeys(value, event) {
+    handleKeys(value, event) {
         if (event.keyCode === 37) this.state.keys.LEFT = value;
         if (event.keyCode === 38) this.state.keys.UP = value;
         if (event.keyCode === 39) this.state.keys.RIGHT = value;

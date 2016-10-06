@@ -1,5 +1,3 @@
-'use strict';
-
 import { Direction } from './constants';
 
 const HEIGHT = 300, WIDTH = 700;

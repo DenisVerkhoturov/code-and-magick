@@ -13,6 +13,7 @@
   },
   "homepage": "https://github.com/htmlacademy-javascript/56756-code-and-magick",
   "sasslintConfig": ".sass-lint.yml",
+  "eslintConfig": ".eslintrc.yml",
   "dependencies": {
     "events": "^1.1.1",
     "flux": "^3.0.0",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.14.0",
+    "babel-eslint": "^7.0.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babelify": "^7.3.0",

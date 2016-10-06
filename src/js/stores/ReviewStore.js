@@ -1,5 +1,3 @@
-'use strict';
-
 import dispatcher from '../dispatchers/dispatcher';
 import { EventEmitter } from 'events';
 import { ACTIONS } from '../actions/reviewActions';
@@ -57,7 +55,7 @@ class ReviewStore extends EventEmitter
 
     changeFilter(event) {
         this.currentFilter = this.filters.get(event.target.value);
-        reviewStore.emit('change');
+        this.emit('change');
     }
 
     getAll() {
@@ -76,12 +74,12 @@ class ReviewStore extends EventEmitter
      */
     add(review) {
         this.reviews.push(review);
-        reviewStore.emit('change');
+        this.emit('change');
     }
 
     remove(index) {
         this.reviews.splice(index, 1);
-        reviewStore.emit('change');
+        this.emit('change');
     }
 
     handleAction(action) {

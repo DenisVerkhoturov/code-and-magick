@@ -1,5 +1,3 @@
-'use strict';
-
 import { Dispatcher as BaseDispatcher } from 'flux';
 
 class Dispatcher extends BaseDispatcher

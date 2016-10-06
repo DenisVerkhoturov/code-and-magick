@@ -1,5 +1,3 @@
-'use strict';
-
 import dispatcher from '../dispatchers/dispatcher';
 
 export const ACTIONS = {

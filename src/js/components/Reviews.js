@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import ReviewsFilter from './ReviewsFilter';
 import Review from './Review';

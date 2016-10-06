@@ -1,5 +1,3 @@
-'use strict';
-
 import del from 'del';
 import gulp from 'gulp';
 import eslint from 'gulp-eslint';
@@ -114,7 +112,9 @@ gulp.task('build', ['html', 'fonts', 'images', 'styles', 'scripts', 'data']);
  */
 gulp.task('lint_js', () => {
     return gulp.src('src/js/**/*.js')
-        .pipe(eslint())
+        .pipe(eslint({
+            configFile: '.eslintrc.yml'
+        }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
 });

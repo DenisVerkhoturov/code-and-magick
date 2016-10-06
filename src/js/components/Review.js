@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 
 export default class Review extends React.Component
@@ -10,7 +8,7 @@ export default class Review extends React.Component
      * @param {String} props.author
      * @param {Number} props.rating
      * @param {String} props.description
-     * @param {Number} props.review_usefulness
+     * @param {Number} props.usefulness
      */
     constructor(props) {
         super(props);
@@ -38,5 +36,5 @@ Review.propTypes = {
     avatar: React.PropTypes.string.isRequired,
     rating: React.PropTypes.number.isRequired,
     description: React.PropTypes.string.isRequired,
-    review_usefulness: React.PropTypes.number
+    usefulness: React.PropTypes.number
 };

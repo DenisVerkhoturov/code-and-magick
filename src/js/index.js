@@ -1,9 +1,7 @@
-'use strict';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Header from './components/Header';
 import Main from './components/Main';
 
-const container = document.querySelector('main');
-
-ReactDOM.render(<Main />, container);
+ReactDOM.render(<Header />, document.querySelector('div.demo'));
+ReactDOM.render(<Main />, document.querySelector('main'));
